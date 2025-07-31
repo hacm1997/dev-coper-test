@@ -91,7 +91,14 @@ export class AuthService {
     res: Response,
   ): Promise<{ authenticated: boolean; user?: any }> {
     try {
-      const token = req.cookies[HTTP_COOKIE_KEY];
+      const cookieValue = req.cookies[HTTP_COOKIE_KEY];
+      // Puede ser un objeto { access_token: '...' } o un string
+      const token =
+        typeof cookieValue === 'object' &&
+        cookieValue !== null &&
+        'access_token' in cookieValue
+          ? cookieValue.access_token
+          : cookieValue;
 
       if (!token) {
         return { authenticated: false };
@@ -173,6 +180,21 @@ export class AuthService {
         throw error;
       }
       throw new InternalServerErrorException('Error refreshing token');
+    }
+  }
+
+  logout(res: any) {
+    try {
+      const tokenExists = Boolean(res.req.cookies?.[HTTP_COOKIE_KEY]);
+
+      res.clearCookie(HTTP_COOKIE_KEY, COOKIE_OPTIONS);
+
+      return tokenExists
+        ? { success: true, message: 'Session successfully closed.' }
+        : { success: false, message: 'No active session found.' };
+    } catch (error) {
+      console.error('Error during logout:', error);
+      throw new InternalServerErrorException('Error during logout process');
     }
   }
 }

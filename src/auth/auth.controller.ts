@@ -54,4 +54,18 @@ export class AuthController {
     const result = await this.authService.verifySession(req, res);
     return res.status(200).json(result);
   }
+
+  @Post('logout')
+  async logout(@Res() res: Response) {
+    try {
+      const result = this.authService.logout(res);
+      return res.status(200).json(result);
+    } catch (error) {
+      console.error('Error during logout:', error);
+      return res.status(500).json({
+        success: false,
+        message: 'Error during logout',
+      });
+    }
+  }
 }
