@@ -29,3 +29,11 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
+## Accessing Documentation with Swagger
+
+To access the Swagger documentation after starting the project, go to the following URL:
+
+```bash
+$ http://localhost:8089/api/docs
+```
