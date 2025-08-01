@@ -28,9 +28,9 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  private generateToken(userId: string, email: string) {
+  private generateToken(userId: string, email: string, role = 'user') {
     try {
-      const payload = { sub: userId, email };
+      const payload = { sub: userId, email, role };
       return { access_token: this.jwtService.sign(payload) };
     } catch (error) {
       console.error('Error generating token:', error);
@@ -46,7 +46,7 @@ export class AuthService {
       dto.password,
       dto.role ?? 'user',
     );
-    return this.generateToken(user._id, user.email);
+    return this.generateToken(user._id, user.email, user.role);
   }
 
   async login(dto: LoginDto, res: Response) {
@@ -58,16 +58,17 @@ export class AuthService {
       throw new UnauthorizedException('Credenciales inválidas');
     }
 
-    return this.generateAuthResponse(user._id, user.email, res);
+    return this.generateAuthResponse(user._id, user.email, user.role, res);
   }
 
   private generateAuthResponse(
     userId: string,
     email: string,
+    role: string,
     res: any,
   ): { success: boolean; message: string } {
     try {
-      const token = this.generateToken(userId, email);
+      const token = this.generateToken(userId, email, role);
 
       res.cookie(HTTP_COOKIE_KEY, token, {
         ...COOKIE_OPTIONS,
