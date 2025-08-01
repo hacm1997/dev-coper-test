@@ -35,5 +35,5 @@ $ npm run start:prod
 To access the Swagger documentation after starting the project, go to the following URL:
 
 ```bash
-$ http://localhost:8089/api/docs
+$ http://localhost:8080/api/docs
 ```
