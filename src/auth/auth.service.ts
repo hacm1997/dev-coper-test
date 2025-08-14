@@ -97,7 +97,7 @@ export class AuthService {
       const token =
         typeof cookieValue === 'object' &&
         cookieValue !== null &&
-        'access_token' in cookieValue
+        HTTP_COOKIE_KEY in cookieValue
           ? cookieValue.access_token
           : cookieValue;
 
