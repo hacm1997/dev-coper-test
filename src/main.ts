@@ -35,7 +35,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.enableCors(corsOptions);
 
-  const port = process.env.PORT ?? 8080;
+  const port = process.env.PORT || 3000;
   await app.listen(port);
   console.log(`App running on: http://localhost:${port}`);
 }
