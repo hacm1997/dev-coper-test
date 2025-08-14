@@ -18,7 +18,7 @@ const HTTP_COOKIE_KEY = 'auth_token';
 const COOKIE_OPTIONS: CookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'lax',
+  sameSite: 'none',
 };
 
 @Injectable()
@@ -96,8 +96,8 @@ export class AuthService {
       // Puede ser un objeto { access_token: '...' } o un string
       const token =
         typeof cookieValue === 'object' &&
-        cookieValue !== null &&
-        'access_token' in cookieValue
+        'access_token' !== null &&
+        HTTP_COOKIE_KEY in cookieValue
           ? cookieValue.access_token
           : cookieValue;
 
