@@ -18,7 +18,7 @@ const HTTP_COOKIE_KEY = 'auth_token';
 const COOKIE_OPTIONS: CookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'lax',
+  sameSite: 'none',
 };
 
 @Injectable()
