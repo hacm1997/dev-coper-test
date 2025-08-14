@@ -9,7 +9,7 @@ export class Product {
   @Prop()
   description?: string;
 
-  @Prop({ required: true, min: 0.01 })
+  @Prop({ required: true, min: 0.01 }) //set: (value: number) => parseFloat(value.toFixed(2)),
   price: number;
 
   @Prop()
