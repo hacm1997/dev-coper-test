@@ -92,6 +92,7 @@ export class AuthService {
     res: Response,
   ): Promise<{ authenticated: boolean; user?: any }> {
     try {
+      console.log('verify cookies => ', req.cookies);
       const cookieValue = req.cookies[HTTP_COOKIE_KEY];
       // Puede ser un objeto { access_token: '...' } o un string
       const token =
